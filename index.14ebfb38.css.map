@@ -1,1 +1,0 @@
-{"mappings":"ACAA","sources":["index.14ebfb38.css","src/sass/partials/mainstyle.scss"],"sourcesContent":["body {\n  background-color: #fff;\n  font-family: Roboto;\n}\n/*# sourceMappingURL=index.14ebfb38.css.map */\n","body{\n   font-family: Roboto;\n   background-color: #FFFFFF;\n   \n}"],"names":[],"version":3,"file":"index.14ebfb38.css.map"}
