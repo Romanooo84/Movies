@@ -1,6 +1,9 @@
 import { fetchMoviesByID, fetchPopularMovies } from './fetchMovies';
 
 const videoSection = document.querySelector('.movie__list');
+const prevPage = document.querySelector('#prev');
+const nextPage = document.querySelector('#next');
+const currPage = document.querySelector('#current');
 
 let pageNumber = 1;
 
@@ -9,6 +12,7 @@ fetchPopularMovies(pageNumber)
   .catch(err => console.error(err));
 
 const renderMovies = movies => {
+  console.log(movies);
   movies.results.forEach(async movie => {
     try {
       const movieDetails = await fetchMoviesByID(movie.id);
@@ -22,12 +26,14 @@ const renderMovies = movies => {
           <p class="info-item">
             <b> ${movie.title}</b>
           </p>
+          <div class="details">
           <p class="info-item">
-            <b> ${movie.release_date.slice(0, 4)}</b>
-          </p>
+          <b>${genres}</b>
+        </p>
           <p class="info-item">
-            <b>  ${genres}</b>
+            <b>| ${movie.release_date.slice(0, 4)}</b>
           </p>
+          </div>
         </div>
       </li>`;
 
@@ -37,6 +43,49 @@ const renderMovies = movies => {
     }
   });
 };
+
+nextPage.addEventListener('click', async () => {
+  try {
+    pageNumber++;
+    const movies = await fetchPopularMovies(pageNumber);
+    videoSection.innerHTML = '';
+    renderMovies(movies);
+    currPage.innerHTML = pageNumber;
+  } catch (error) {
+    console.error('Error fetching popular movies:', error);
+  }
+});
+
+prevPage.addEventListener('click', async () => {
+  try {
+    if (pageNumber > 1) {
+      pageNumber--;
+      const movies = await fetchPopularMovies(pageNumber);
+      videoSection.innerHTML = '';
+      renderMovies(movies);
+
+      currPage.innerHTML = pageNumber;
+    }
+  } catch (error) {
+    console.error('Error fetching popular movies:', error);
+  }
+});
+
+// nextPage.addEventListener('click', async () => {
+//   try {
+//     pageNumber++;
+//     const movies = await fetchPopularMovies(pageNumber);
+//     renderMovies(movies);
+
+//     currPage.innerHTML = `${pageNumber > 3 ? pageNumber - 3 : ''} ${
+//       pageNumber > 2 ? pageNumber - 2 : ''
+//     } ${pageNumber > 1 ? pageNumber - 1 : ''} ${pageNumber} ${pageNumber + 1} ${pageNumber + 2} ${
+//       pageNumber + 3
+//     }`;
+//   } catch (error) {
+//     console.error('Error fetching popular movies:', error);
+//   }
+// });
 
 // fetchMoviesByID(27)
 //   .then(movie => {
