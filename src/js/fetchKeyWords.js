@@ -1,5 +1,5 @@
 const searchForm = document.querySelector('.header-home-form');
-const gallery = document.querySelector('.gallery');
+const moviesContainer = document.querySelector('.movie__list');
 let page = 1;
 let genre;
 
@@ -30,32 +30,27 @@ const fetchKeyMovies = async (querySearch, page) => {
 
 // };
 
-const renderMovies = movies => {
+const renderKeyMovies = movies => {
   console.log('Movies', movies);
 
   return movies
     .map(({ poster_path, original_title, genre_ids, release_date }) => {
-      return `<div class="movie__card" data-id="${id}">
-          <div class="movie__imgbox">
-            <img class="movie__img" src="${
-              poster_path
-                ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                : 'https://movienewsletters.net/photos/000000h1.jpg'
-            }"
-            alt="${original_title}" loading="lazy"/>
-          </div>
-          <p class="movie__title">
-            <b>${original_title}</b>
+      return `<li class="movie-card">
+        <a href="${poster_path}">
+          <img src="https://image.tmdb.org/t/p/w500/${poster_path}" alt="${original_title}"/>
+        </a>
+        <div class="info">
+          <p class="info-item">
+            <b> ${original_title}</b>
           </p>
-          <div class="movie__info">
-            <p class="movie__genres">
-              ${genre_ids.slice(0, 2)}
-            </p>
-            <p class="movie__year">
-              | ${release_date.slice(0, 4)}
-            </p>
-          </div>
-        </div>`;
+          <p class="info-item">
+            <b> ${release_date.slice(0, 4)}</b>
+          </p>
+          <p class="info-item">
+            <b>  ${genre_ids.slice(0, 2)}</b>
+          </p>
+        </div>
+      </li>`;
     })
     .join('');
 };
@@ -68,8 +63,8 @@ const searchingInput = async event => {
   await fetchKeyMovies(querySearch, page)
     // .then(movies => console.log(movies))
     .then(movies => {
-      const moviesMarkup = renderMovies(movies);
-      gallery.innerHTML = moviesMarkup;
+      const moviesMarkup = renderKeyMovies(movies);
+      moviesContainer.innerHTML = moviesMarkup;
     })
 
     .catch(error => console.log(error));
