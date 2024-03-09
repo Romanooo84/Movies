@@ -10,11 +10,9 @@ const fetchKeyMovies = async (querySearch, page) => {
     api_key: API_KEY,
     query: querySearch,
     page: page,
-    // per_page: perPage,
   });
 
   const response = await fetch(`https://api.themoviedb.org/3/search/movie?${searchParams}`);
-  //   console.log(responseKeyMovies);
   const responseKeyMovies = await response.json();
   return responseKeyMovies.results;
 };
@@ -34,8 +32,7 @@ const fetchKeyMovies = async (querySearch, page) => {
 
 const renderMovies = movies => {
   console.log('Movies', movies);
-  genre = movies.forEach(genre => ` ${genre.name}`);
-  console.log('genre', genre);
+
   return movies
     .map(({ poster_path, original_title, genre_ids, release_date }) => {
       return `<div class="movie__card" data-id="${id}">
@@ -78,34 +75,3 @@ const searchingInput = async event => {
     .catch(error => console.log(error));
 };
 searchForm.addEventListener('submit', searchingInput);
-
-// ******************************************************************************************* //
-
-// // const searchForm = document.querySelector('#search-form');
-// // const gallery = document.querySelector('.gallery');
-
-// const fetchKeyMovies = async querySearch => {
-//   const API_KEY = 'e7c930d9ee21da94f8fc3257d387eced';
-
-//   const searchParams = new URLSearchParams({
-//     api_key: API_KEY,
-//     query: querySearch,
-//     page: 1,
-//     // per_page: perPage,
-//   });
-
-//   const response = await fetch(`https://api.themoviedb.org/3/search/movie?${searchParams}`);
-//   // console.log(responseKeyMovies);
-//   const responseKeyMovies = await response.json();
-//   return responseKeyMovies;
-// };
-
-// const searchingInput = async event => {
-//   event.preventDefault();
-//   const querySearch = event.target.elements.searchQuery.value.trim();
-//   console.log(querySearch);
-//   await fetchKeyMovies(querySearch)
-//     .then(responseKeyMovies => console.log(responseKeyMovies))
-//     .catch(error => console.log(error));
-// };
-// searchForm.addEventListener('submit', searchingInput);
