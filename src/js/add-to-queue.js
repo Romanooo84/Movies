@@ -1,4 +1,3 @@
-// Dodawanie filmów do kolejki
 const addToQueue = movieId => {
   const queue = JSON.parse(localStorage.getItem('queueMovies')) || [];
   if (!queue.includes(movieId)) {
