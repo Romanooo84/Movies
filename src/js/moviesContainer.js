@@ -63,12 +63,29 @@ prevPage.addEventListener('click', async () => {
       const movies = await fetchPopularMovies(pageNumber);
       videoSection.innerHTML = '';
       renderMovies(movies);
+
       currPage.innerHTML = pageNumber;
     }
   } catch (error) {
     console.error('Error fetching popular movies:', error);
   }
 });
+
+// nextPage.addEventListener('click', async () => {
+//   try {
+//     pageNumber++;
+//     const movies = await fetchPopularMovies(pageNumber);
+//     renderMovies(movies);
+
+//     currPage.innerHTML = `${pageNumber > 3 ? pageNumber - 3 : ''} ${
+//       pageNumber > 2 ? pageNumber - 2 : ''
+//     } ${pageNumber > 1 ? pageNumber - 1 : ''} ${pageNumber} ${pageNumber + 1} ${pageNumber + 2} ${
+//       pageNumber + 3
+//     }`;
+//   } catch (error) {
+//     console.error('Error fetching popular movies:', error);
+//   }
+// });
 
 // fetchMoviesByID(27)
 //   .then(movie => {
