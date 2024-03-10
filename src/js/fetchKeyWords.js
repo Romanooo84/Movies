@@ -28,8 +28,8 @@ const fetchKeyMovies = async (querySearch, page) => {
 //   const genresNames = await genres.json();
 //   console.log('genresnames', genresNames);
 //   return genresNames;
-
 // };
+// console.log(fetchGenres());
 
 const renderKeyMovies = movies => {
   console.log('Movies', movies);
@@ -63,13 +63,11 @@ const renderKeyMovies = movies => {
 const searchingInput = async event => {
   event.preventDefault();
   const querySearch = event.target.elements.searchQuery.value.trim();
-
   console.log(querySearch);
+
   await fetchKeyMovies(querySearch, page)
     // .then(movies => console.log(movies))
     .then(movies => {
-      const moviesMarkup = renderKeyMovies(movies);
-      moviesContainer.innerHTML = moviesMarkup;
       if (querySearch === '' || movies.length <= 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no movies matching your search query. Please try again.',
@@ -79,7 +77,6 @@ const searchingInput = async event => {
         moviesContainer.innerHTML = moviesMarkup;
       }
     })
-
     .catch(error => console.log(error));
   searchForm.reset();
 };
