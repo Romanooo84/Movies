@@ -1,3 +1,4 @@
+import Notiflix from 'notiflix';
 const searchForm = document.querySelector('.header-home-form');
 const moviesContainer = document.querySelector('.movie__list');
 let page = 1;
@@ -37,7 +38,11 @@ const renderKeyMovies = movies => {
     .map(({ poster_path, original_title, genre_ids, release_date }) => {
       return `<li class="movie-card">
         <a href="${poster_path}">
-          <img src="https://image.tmdb.org/t/p/w500/${poster_path}" alt="${original_title}"/>
+          <img src="${
+            poster_path
+              ? `https://image.tmdb.org/t/p/w500${poster_path}`
+              : 'https://cdn.vectorstock.com/i/1000x1000/82/99/no-image-available-like-missing-picture-vector-43938299.webp'
+          }" alt="${original_title}"/>
         </a>
         <div class="info">
           <p class="info-item">
@@ -65,8 +70,17 @@ const searchingInput = async event => {
     .then(movies => {
       const moviesMarkup = renderKeyMovies(movies);
       moviesContainer.innerHTML = moviesMarkup;
+      if (querySearch === '' || movies.length <= 0) {
+        Notiflix.Notify.failure(
+          'Sorry, there are no movies matching your search query. Please try again.',
+        );
+      } else {
+        const moviesMarkup = renderKeyMovies(movies);
+        moviesContainer.innerHTML = moviesMarkup;
+      }
     })
 
     .catch(error => console.log(error));
+  searchForm.reset();
 };
 searchForm.addEventListener('submit', searchingInput);
