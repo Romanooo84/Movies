@@ -35,27 +35,29 @@ const renderKeyMovies = movies => {
   console.log('Movies', movies);
 
   return movies
-    .map(({ poster_path, original_title, genre_ids, release_date }) => {
+    .map(({ id, poster_path, original_title, genre_ids, release_date }) => {
       return `<li class="movie-card">
-        <a href="${poster_path}">
-          <img src="${
-            poster_path
-              ? `https://image.tmdb.org/t/p/w500${poster_path}`
-              : 'https://cdn.vectorstock.com/i/1000x1000/82/99/no-image-available-like-missing-picture-vector-43938299.webp'
-          }" alt="${original_title}"/>
-        </a>
-        <div class="info">
-          <p class="info-item">
-            <b> ${original_title}</b>
-          </p>
-          <p class="info-item">
-            <b> ${release_date.slice(0, 4)}</b>
-          </p>
-          <p class="info-item">
-            <b>  ${genre_ids.slice(0, 2)}</b>
-          </p>
+      <a href="${poster_path}" data-movie-id="${id}">
+        <img src="${
+          poster_path
+            ? `https://image.tmdb.org/t/p/w500${poster_path}`
+            : 'https://cdn.vectorstock.com/i/1000x1000/82/99/no-image-available-like-missing-picture-vector-43938299.webp'
+        }" alt="${original_title}"/>
+      </a>
+      <div class="info">
+        <p class="info-item">
+          <b> ${original_title}</b>
+        </p>
+        <div class="details">
+        <p class="info-item">
+        <b>${genre_ids.slice(0, 2)}</b>
+      </p>
+        <p class="info-item">
+          <b>| ${release_date.slice(0, 4)}</b>
+        </p>
         </div>
-      </li>`;
+      </div>
+    </li>`;
     })
     .join('');
 };
@@ -77,6 +79,7 @@ const searchingInput = async event => {
         moviesContainer.innerHTML = moviesMarkup;
       }
     })
+
     .catch(error => console.log(error));
   searchForm.reset();
 };
