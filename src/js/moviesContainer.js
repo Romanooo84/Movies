@@ -5,6 +5,9 @@ const prevPage = document.querySelector('#prev');
 const nextPage = document.querySelector('#next');
 const currPage = document.querySelector('#current');
 
+const modalWindow = document.querySelector('.modal-window');
+const modalOverlay = document.querySelector('.modal-overlay');
+
 let pageNumber = 1;
 
 fetchPopularMovies(pageNumber)
@@ -13,13 +16,14 @@ fetchPopularMovies(pageNumber)
 
 const renderMovies = movies => {
   console.log(movies);
+
   movies.results.forEach(async movie => {
     try {
       const movieDetails = await fetchMoviesByID(movie.id);
       const genres = movieDetails.genres.map(genre => genre.name).join(', ');
 
       const html = `<li class="movie-card">
-        <a href="${movie.poster_path}">
+        <a href="${movie.poster_path}" data-movie-id="${movie.id}">
           <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}"/>
         </a>
         <div class="info">
@@ -42,6 +46,78 @@ const renderMovies = movies => {
       console.error('Error fetching movie details:', error);
     }
   });
+};
+
+videoSection.addEventListener('click', async e => {
+  e.preventDefault();
+  const target = e.target.closest('a');
+  const movieId = target.dataset.movieId;
+  console.log('Clicked on movie with ID:', movieId);
+
+  try {
+    const movieDetails = await fetchMoviesByID(movieId);
+    console.log(movieDetails);
+    const modalContent = `
+        <div>
+          <div>
+            <button id="close-modal">
+              <svg width="30" height="30">
+                <use href="./images/icons.svg#icon-close" />
+              </svg>
+            </button>
+            <div>
+              <img src="https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}" alt="${
+      movieDetails.title
+    }" width="375" height="478" />
+            </div>
+            <div>
+              <h1>${movieDetails.title}</h1>
+              <div>
+                <div>
+                  <p>Vote/Votes</p>
+                  <p>Popularity</p>
+                  <p>Original Title</p>
+                  <p>Genre</p>
+                </div>
+                <div>
+                  <p>${movieDetails.vote_average} / ${movieDetails.vote_count}</p>
+                  <p>${movieDetails.popularity}</p>
+                  <p>${movieDetails.original_title}</p>
+                  <p>${movieDetails.genres.map(genre => genre.name).join(', ')}</p>
+                </div>
+              </div>
+              <h2>About</h2>
+              <p>${movieDetails.overview}</p>
+              <div class="modal-buttons">
+              <button class="add-to-watched" id="watched-btn">add to watched</button>
+              <button class="add-to-queue" id="queue-button">add to queue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    modalWindow.innerHTML = modalContent;
+    modalWindow.classList.remove('hidden');
+    const closeModal = document.querySelector('#close-modal');
+    closeModal.addEventListener('click', () => {
+      modalWindow.classList.add('hidden');
+      modalOverlay.classList.remove('active');
+    });
+    modalOverlay.classList.add('active');
+  } catch (error) {
+    console.error('Error fetching movie details:', error);
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal();
+  }
+});
+
+const closeModal = () => {
+  modalWindow.classList.add('hidden');
+  modalOverlay.classList.remove('active');
 };
 
 nextPage.addEventListener('click', async () => {
