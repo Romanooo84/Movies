@@ -14,7 +14,7 @@ a {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
     url('../images/header.jpg');
     height: 200px;
-    width: 1440px;
+    max-width: 1440px;
     flex-shrink: 0;
     margin: 0 auto;
 background-size: cover;
@@ -147,7 +147,7 @@ border-bottom: 1px solid #fff ;
     }
 }
 .header-home-container {
-    width: 1440px;
+    max-width: 1440px;
     padding: 45px 32px;
     margin: 0 auto;
 }
