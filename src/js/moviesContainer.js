@@ -30,12 +30,9 @@ const renderMovies = movies => {
           <p class="info-item">
             <b> ${movie.title}</b>
           </p>
-          <div class="details">
+            <div class="details">
           <p class="info-item">
-          <b>${genres}</b>
-        </p>
-          <p class="info-item">
-            <b>| ${movie.release_date.slice(0, 4)}</b>
+            <b>${genres} | ${movie.release_date.slice(0, 4)}</b>
           </p>
           </div>
         </div>
