@@ -86,8 +86,8 @@ videoSection.addEventListener('click', async e => {
               <h2>About</h2>
               <p>${movieDetails.overview}</p>
               <div class="modal-buttons">
-              <button class="add-to-watched" id="watched-btn">add to watched</button>
-              <button class="add-to-queue" id="queue-button">add to queue</button>
+              <button data-movie-id="${movieId}" type="button" class="add-to-watched" id="watched-btn">add to watched</button>
+              <button data-movie-id="${movieId}" type="button" class="add-to-queue" id="queue-button">add to queue</button>
               </div>
             </div>
           </div>
