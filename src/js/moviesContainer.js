@@ -15,34 +15,34 @@ fetchPopularMovies(pageNumber)
   .catch(err => console.error(err));
 
 const renderMovies = movies => {
-  console.log(movies);
+  const promises = movies.results.map(movie => fetchMoviesByID(movie.id));
 
-  movies.results.forEach(async movie => {
-    try {
-      const movieDetails = await fetchMoviesByID(movie.id);
-      const genres = movieDetails.genres.map(genre => genre.name).join(', ');
+  Promise.all(promises)
+    .then(movieDetails => {
+      movies.results.forEach((movie, index) => {
+        const movieDetail = movieDetails[index];
+        const genres = movieDetail.genres.map(genre => genre.name).join(', ');
 
-      const html = `<li class="movie-card">
-        <a href="${movie.poster_path}" data-movie-id="${movie.id}">
-          <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}"/>
-        </a>
-        <div class="info">
-          <p class="info-item">
-            <b> ${movie.title}</b>
-          </p>
-            <div class="details">
-          <p class="info-item">
-            <b>${genres} | ${movie.release_date.slice(0, 4)}</b>
-          </p>
-          </div>
-        </div>
-      </li>`;
+        const html = `<li class="movie-card">
+            <a href="${movie.poster_path}" data-movie-id="${movie.id}">
+              <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}"/>
+            </a>
+            <div class="info">
+              <p class="info-item">
+                <b> ${movie.title}</b>
+              </p>
+                <div class="details">
+              <p class="info-item">
+                <b>${genres} | ${movie.release_date.slice(0, 4)}</b>
+              </p>
+              </div>
+            </div>
+          </li>`;
 
-      videoSection.insertAdjacentHTML('afterbegin', html);
-    } catch (error) {
-      console.error('Error fetching movie details:', error);
-    }
-  });
+        videoSection.insertAdjacentHTML('afterbegin', html);
+      });
+    })
+    .catch(error => console.error('Error fetching movie details:', error));
 };
 
 videoSection.addEventListener('click', async e => {
@@ -143,6 +143,38 @@ prevPage.addEventListener('click', async () => {
     console.error('Error fetching popular movies:', error);
   }
 });
+
+// const renderMovies = movies => {
+//   console.log(movies);
+
+//   movies.results.forEach(async movie => {
+//     try {
+//       const movieDetails = await fetchMoviesByID(movie.id);
+//       const genres = movieDetails.genres.map(genre => genre.name).join(', ');
+
+//       const html = `<li class="movie-card">
+//         <a href="${movie.poster_path}" data-movie-id="${movie.id}">
+//           <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}"/>
+//         </a>
+//         <div class="info">
+//           <p class="info-item">
+//             <b> ${movie.title}</b>
+//           </p>
+//             <div class="details">
+//           <p class="info-item">
+//             <b>${genres} | ${movie.release_date.slice(0, 4)}</b>
+//           </p>
+//           </div>
+//         </div>
+//       </li>`;
+
+//       videoSection.insertAdjacentHTML('afterbegin', html);
+//     } catch (error) {
+//       console.error('Error fetching movie details:', error);
+//     }
+//   });
+//   loader.style.display = 'block';
+// };
 
 // nextPage.addEventListener('click', async () => {
 //   try {
