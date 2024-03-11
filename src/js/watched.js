@@ -7,7 +7,7 @@ const addToWatched = movieId => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const addToWatchedBtn = document.getElementById('add-to-watched');
+  const addToWatchedBtn = document.getElementById('watched-btn'); // Poprawiono identyfikator
   if (addToWatchedBtn) {
     addToWatchedBtn.addEventListener('click', () => {
       const movieId = addToWatchedBtn.getAttribute('data-movie-id');
