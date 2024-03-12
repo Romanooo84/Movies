@@ -7,11 +7,13 @@ const addToWatched = movieId => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const addToWatchedBtn = document.getElementById('watched-btn'); // Poprawiono identyfikator
-  if (addToWatchedBtn) {
-    addToWatchedBtn.addEventListener('click', () => {
-      const movieId = addToWatchedBtn.getAttribute('data-movie-id');
-      addToWatched(movieId);
-    });
-  }
+  setTimeout(() => {
+    const addToWatchedBtn = document.getElementById('watched-btn');
+    if (addToWatchedBtn) {
+      addToWatchedBtn.addEventListener('click', () => {
+        const movieId = addToWatchedBtn.getAttribute('data-movie-id');
+        addToWatched(movieId);
+      });
+    }
+  }, 0);
 });

@@ -58,8 +58,9 @@ videoSection.addEventListener('click', async e => {
         <div>
           <div>
             <button class="modal-window__close" id="close-modal">
+
               <svg width="30" height="30">
-                <use href="./images/icons.svg#icon-close" />
+                <use href="../images/icons.svg#icon-close"></use>
               </svg>
             </button>
             <div>
@@ -97,6 +98,7 @@ videoSection.addEventListener('click', async e => {
       `;
     modalWindow.innerHTML = modalContent;
     modalWindow.classList.remove('hidden');
+
     const closeModal = document.querySelector('#close-modal');
     closeModal.addEventListener('click', () => {
       modalWindow.classList.add('hidden');
@@ -106,6 +108,10 @@ videoSection.addEventListener('click', async e => {
   } catch (error) {
     console.error('Error fetching movie details:', error);
   }
+});
+
+modalOverlay.addEventListener('click', () => {
+  closeModal();
 });
 
 document.addEventListener('keydown', e => {
