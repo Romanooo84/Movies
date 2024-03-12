@@ -7,7 +7,7 @@ const addToQueue = movieId => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const addToQueueBtn = document.getElementById('queue-button'); // Poprawiono identyfikator
+  const addToQueueBtn = document.getElementById('queue-button');
   if (addToQueueBtn) {
     addToQueueBtn.addEventListener('click', () => {
       const movieId = addToQueueBtn.getAttribute('data-movie-id');
