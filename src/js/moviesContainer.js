@@ -1,3 +1,6 @@
+// import $ from '../../node_modules/jquery/dist/jquery';
+// import '../../node_modules/paginationjs/dist/pagination.css';
+// import '../../node_modules/paginationjs/dist/pagination.min.js';
 import { fetchMoviesByID, fetchPopularMovies } from './fetchMovies';
 
 const videoSection = document.querySelector('.movie__list');
@@ -9,6 +12,7 @@ const modalWindow = document.querySelector('.modal-window');
 const modalOverlay = document.querySelector('.modal-overlay');
 
 let pageNumber = 1;
+let totalPages = 0;
 
 fetchPopularMovies(pageNumber)
   .then(movies => renderMovies(movies))
@@ -143,6 +147,32 @@ prevPage.addEventListener('click', async () => {
     console.error('Error fetching popular movies:', error);
   }
 });
+
+// // Funkcja do pobierania i renderowania filmów
+// const fetchAndRenderMovies = pageNumber => {
+//   // Pobieramy popularne filmy dla danej strony
+//   fetchPopularMovies(pageNumber)
+//     .then(movies => {
+//       // Ustawiamy liczbę wszystkich stron
+//       totalPages = movies.total_pages;
+//       // Renderujemy filmy
+//       renderMovies(movies.results);
+//     })
+//     .catch(err => console.error(err));
+// };
+
+// // Inicjalizacja paginacji
+// $('#pagination-container').pagination({
+//   dataSource: function (done) {
+//     // Wywołujemy funkcję do pobierania i renderowania filmów
+//     fetchAndRenderMovies(pageNumber);
+//   },
+//   pageSize: 20,
+//   callback: function (data, pagination) {
+//     // Renderujemy filmy dla aktualnej strony
+//     renderMovies(data);
+//   },
+// });
 
 // const renderMovies = movies => {
 //   console.log(movies);
