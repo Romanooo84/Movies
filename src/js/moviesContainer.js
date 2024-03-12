@@ -57,34 +57,36 @@ videoSection.addEventListener('click', async e => {
     const modalContent = `
         <div>
           <div>
-            <button id="close-modal">
+            <button class="modal-window__close" id="close-modal">
               <svg width="30" height="30">
                 <use href="./images/icons.svg#icon-close" />
               </svg>
             </button>
             <div>
-              <img src="https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}" alt="${
+              <img class="modal-window__image" src="https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}" alt="${
       movieDetails.title
-    }" width="375" height="478" />
+    }" />
             </div>
-            <div>
+            <div class="modal-window__description">
               <h1>${movieDetails.title}</h1>
-              <div>
-                <div>
+              <div class="modal-window__rates">
+                <div class="modal-window__rates--titles">
                   <p>Vote/Votes</p>
                   <p>Popularity</p>
                   <p>Original Title</p>
                   <p>Genre</p>
                 </div>
-                <div>
+                <div class="modal-window__rates--results">
                   <p>${movieDetails.vote_average} / ${movieDetails.vote_count}</p>
                   <p>${movieDetails.popularity}</p>
                   <p>${movieDetails.original_title}</p>
                   <p>${movieDetails.genres.map(genre => genre.name).join(', ')}</p>
                 </div>
               </div>
-              <h2>About</h2>
-              <p>${movieDetails.overview}</p>
+              <div>
+              <dt>ABOUT</dt>
+              <dd>${movieDetails.overview}</dd>
+              </div>
               <div class="modal-buttons">
               <button data-movie-id="${movieId}" type="button" class="add-to-watched" id="watched-btn">add to watched</button>
               <button data-movie-id="${movieId}" type="button" class="add-to-queue" id="queue-button">add to queue</button>
