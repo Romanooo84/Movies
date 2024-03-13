@@ -11,14 +11,34 @@ const currPage = document.querySelector('#current');
 const modalWindow = document.querySelector('.modal-window');
 const modalOverlay = document.querySelector('.modal-overlay');
 
+const ulTag = document.querySelector('.paginator-ul');
+console.log(ulTag);
+
+// let totalPages = 0;
 let pageNumber = 1;
-let totalPages = 0;
+
+function element(totalPages, page) {
+  let liTag = ``;
+  if (page > 1) {
+    liTag += `<li class="btn prev">
+    <span><i class="fas fa-angle-left"></i>Prev</span>
+  </li>`;
+  }
+  if (page < totalPages) {
+    liTag += `<li class="btn next">
+    <span><i class="fas fa-angle-right"></i>next</span>
+    </li>`;
+  }
+  ulTag.innerHTML = liTag;
+}
 
 fetchPopularMovies(pageNumber)
   .then(movies => renderMovies(movies))
   .catch(err => console.error(err));
 
 const renderMovies = movies => {
+  element(movies.total_pages, pageNumber);
+
   const promises = movies.results.map(movie => fetchMoviesByID(movie.id));
 
   Promise.all(promises)
